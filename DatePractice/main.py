@@ -9,6 +9,7 @@ Doomsdays:
 14/3
 4/4 6/6 8/8 10/10 12/12
 5/9 9/5
+7/11 11/7
 
 Side notes:
 4/6 (USA Nationaldag)
@@ -76,7 +77,6 @@ def find_week_day(date, year):
     Find weekday of a certain date
     :param date: String what date to find weekday for
     :param year: int year of the date
-    :param leap: bool if leap year or not
     :return: String: weekday for date
     """
 
@@ -122,6 +122,12 @@ def print_stats():
     wins = 0
     total_time = 0
 
+    five_sum = 0
+    five_avg = 0
+
+    ten_sum = 0
+    ten_avg = 0
+
     for i in lines[1:]:
         wins += int(i[0])
         total_time += float(i[2:-1])
@@ -129,7 +135,40 @@ def print_stats():
     avg_time = total_time / int(plays)
     win_perc = wins / int(plays) * 100
 
-    print(f"Wins: {wins} Win %: {win_perc:.3f} Average time: {avg_time:.3f}")
+    five = False    if len(lines) > 5:
+        i = -1
+        added = 0
+        while added < 5 and abs(i) < len(lines):
+            if int(lines[i][0]) == 1:
+                five_sum += float(lines[i][2:-1])
+                added += 1
+            i -= 1
+
+        if added == 5:
+            five_avg = five_sum / 5
+            five = True
+
+    ten = False
+    if len(lines) > 10:
+        i = -1
+        added = 0
+        while added < 10 and abs(i) < len(lines):
+            if int(lines[i][0]) == 1:
+                ten_sum += float(lines[i][2:-1])
+                added += 1
+            i -= 1
+
+        if added == 10:
+            ten_avg = ten_sum / 10
+            ten = True
+
+    print(f"Wins: {wins} Win %: {win_perc:.3f} Average time: {avg_time:.3f}", end="" if five or ten else "\n")
+
+    if five:
+        print(f" Five win average {five_avg:.3f}", end="" if ten else "\n")
+
+    if ten:
+        print(f" Ten win average {ten_avg:.3f}")
 
 
 def practice():
@@ -205,7 +244,7 @@ def practice():
 
 
 def main():
-    print("Enter option: (q, write, practice)")
+    print("Enter option: (q, write, practice, stats)")
     while True:
         inp = input()
         if inp.lower() == "q":
@@ -216,6 +255,9 @@ def main():
         elif inp.lower() == "practice":
             practice()
             break
+        elif inp.lower() == "stats":
+            print_stats()
+            print("Enter option: (q, write, practice, stats)")
         else:
             print("Invalid input")
 
