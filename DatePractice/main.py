@@ -135,7 +135,8 @@ def print_stats():
     avg_time = total_time / int(plays)
     win_perc = wins / int(plays) * 100
 
-    five = False    if len(lines) > 5:
+    five = False
+    if len(lines) > 5:
         i = -1
         added = 0
         while added < 5 and abs(i) < len(lines):
