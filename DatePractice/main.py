@@ -160,6 +160,7 @@ def practice():
                 keep_playing = False
                 break
             elif inp == "override":
+                # TODO implement here
                 pass # remove last line of txt (wrong attempt) and add to list anyway
             elif inp == "stats":
                 print_stats()
@@ -198,6 +199,7 @@ def practice():
         if inp.capitalize() != correct:
             txt.write("0 " + str(round(res, 2)) + "\n")
 
+        # TODO change to work properly
         # If answer was correct add to file other wise add wrong
         # Print stats, correct % and avg time
 
