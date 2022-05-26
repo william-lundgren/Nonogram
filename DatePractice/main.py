@@ -247,7 +247,6 @@ def practice():
             txt.write("0\n")
             override = "1 " + str(round(res, 2)) + "\n"
 
-        # TODO change to work properly
         # If answer was correct add to file other wise add wrong
         # Print stats, correct % and avg time
 
