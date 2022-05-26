@@ -141,6 +141,7 @@ def print_stats():
         added = 0
         while added < 5 and abs(i) < len(lines):
             if int(lines[i][0]) == 1:
+                print(lines[i][2:-1])
                 five_sum += float(lines[i][2:-1])
                 added += 1
             i -= 1
@@ -199,9 +200,14 @@ def practice():
             if inp == "q":
                 keep_playing = False
                 break
-            elif inp == "override":
-                # TODO implement here
-                pass # remove last line of txt (wrong attempt) and add to list anyway
+            elif inp == "override" and override is not None:
+                chars = len(lines[-1])
+                txt = open("results.txt", "r+")
+                txt.seek(0, 2)
+                txt.seek(txt.tell() - chars, 0)
+                txt.write(override)
+                txt.close()
+                print("Overridden!")
             elif inp == "stats":
                 print_stats()
             else:
@@ -236,8 +242,10 @@ def practice():
         txt = open("results.txt", "a+")
         if inp.capitalize() == correct:
             txt.write("1 " + str(round(res, 2)) + "\n")
+            override = None
         if inp.capitalize() != correct:
-            txt.write("0 " + str(round(res, 2)) + "\n")
+            txt.write("0\n")
+            override = "1 " + str(round(res, 2)) + "\n"
 
         # TODO change to work properly
         # If answer was correct add to file other wise add wrong
